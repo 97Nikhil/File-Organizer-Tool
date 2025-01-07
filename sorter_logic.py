@@ -18,7 +18,7 @@ EXTENSION_MAPPING = {
     "Others": []  # Files with no extension or unrecognized types
 }
 
-old_path_lst = []
+file_path_history = []
 
 # Find folder using extension
 def get_folder_name(extension):
@@ -42,16 +42,29 @@ def sort_folder(path):
         return
     
     for file in files:
-        full_path = os.path.join(path, file)
+        full_path = os.path.join(path, file) # Original location
         if os.path.isfile(full_path):
             _, extension = os.path.splitext(file)
             folder_name = get_folder_name(extension)
             dest_folder = os.path.join(path, folder_name)
             os.makedirs(dest_folder, exist_ok=True)
-            shutil.move(full_path, os.path.join(dest_folder, file))
+
+            new_path = os.path.join(dest_folder, file) # New location
+            file_path_history.append({"file":file, "old_path":full_path, "new_path":new_path})
+
+            shutil.move(full_path, new_path) # Move the files
 
     messagebox.showinfo("Success", "Files have been successfully organized!")
 
 
 def undo_sort():
-    pass
+    if not file_path_history:
+        messagebox.showerror("Error", "Please first sort a folder.")
+
+    else:
+        for entry in file_path_history:
+            shutil.move(entry["new_path"], entry["old_path"])
+        # Delete old history
+        file_path_history.clear()
+
+        messagebox.showinfo("Undo successful!", "All files have been restored to their original locations.")

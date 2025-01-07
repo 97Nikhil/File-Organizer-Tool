@@ -1,1 +1,1 @@
-
+messagebox.showerror("Error", "Please enter or select a folder path.")

@@ -18,6 +18,8 @@ EXTENSION_MAPPING = {
     "Others": []  # Files with no extension or unrecognized types
 }
 
+old_path_lst = []
+
 # Find folder using extension
 def get_folder_name(extension):
     for folder, extensions in EXTENSION_MAPPING.items():
@@ -49,3 +51,7 @@ def sort_folder(path):
             shutil.move(full_path, os.path.join(dest_folder, file))
 
     messagebox.showinfo("Success", "Files have been successfully organized!")
+
+
+def undo_sort():
+    pass

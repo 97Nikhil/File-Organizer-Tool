@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, filedialog, font
-from sorter_logic import sort_folder
+from sorter_logic import sort_folder, undo_sort
 
 
 def create_gui():
@@ -87,17 +87,32 @@ def create_gui():
     browse_button.pack(side="left", padx=5)
 
     # Sort button
+    button_frame = tk.Frame(frame, bg="#344955")
+    button_frame.pack(pady=30)
+
     sort_button = tk.Button(
-        frame,
+        button_frame,
         text="Sort Folder",
-        command=run_sorter,  # Updated to call run_sorter
+        command=run_sorter,
         bg="#F9AA33",
         fg="#344955",
         font=("SF Pro", 16, "bold"),
         width=15,
         relief="flat",
     )
-    sort_button.pack(pady=30)
+    sort_button.pack(side="left", padx=10)
+
+    undo_button = tk.Button(
+        button_frame,
+        text="Undo Sort",
+        command=undo_sort,
+        bg="#F9AA33",
+        fg="#344955",
+        font=("SF Pro", 16, "bold"),
+        width=15,
+        relief="flat",
+    )
+    undo_button.pack(side="left", padx=10)
 
     # Footer with instructions button
     footer_frame = tk.Frame(frame, bg="#344955")
